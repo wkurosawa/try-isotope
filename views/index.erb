@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <title>Isotope Test</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/vendor/modernizr.js"></script>
+
+  </head>
+  <body>
+    <div class="row">
+      <div class="medium-12 columns">
+        <h1>Isotope Sort Test</h1>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div id="sorts">
+        <button class="button" data-sort-by="id">id</button>
+        <button class="button" data-sort-by="name">name</button>
+        <button class="button" data-sort-by="upvotes">upvotes</button>
+      </div>
+    </div>
+
+    <div class="row container isotope">
+
+      <% Cards.each do |card| %>
+        <div class="dashboard-card medium-3 columns">
+          <p class="id"><%= card[:id] %></p>
+          <p class="name"><%= card[:name] %></p>
+          <p class="upvotes"><%= card[:upvotes] %></p>
+        </div>
+      <% end %>
+
+    </div>
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script src="js/vendor/isotope.pkgd.js"></script>
+    <script>
+      $(document).foundation();
+
+      $(document).ready(function(){
+        $( function() {
+          var $container = $('.isotope').isotope({
+            itemSelector: '.dashboard-card',
+            layoutMode: 'fitRows',
+            getSortData: {
+              name: '.name',
+              upvotes: '.upvotes parseInt',
+              id: '.id parseInt',
+            }
+          });
+          $('#sorts').on( 'click', 'button', function() {
+            var sortByValue = $(this).attr('data-sort-by');
+            $container.isotope({ sortBy: sortByValue });
+          });
+        });
+      });
+    </script>
+
+  </body>
+</html>
